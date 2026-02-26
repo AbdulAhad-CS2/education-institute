@@ -1,9 +1,24 @@
+"use client";
+
 import Link from 'next/link';
 import { Button } from "@/components/ui/button"; // We will install this next
+import React from 'react';
+import { getSession, logout } from "@/app/actions/auth";
 
 export default function Navbar() {
-  // TODO: Later, we will replace this with real Supabase Auth check
-  const isLoggedIn = false; 
+  const [user, setUser] = React.useState<any>(null);
+
+  React.useEffect(() => {
+    const checkUser = async () => {
+      const user = await getSession();
+      setUser(user);
+    };
+    checkUser();
+  }, []);
+
+  const handleLogout = async () => {
+    await logout();
+  };
 
   return (
     <nav className="border-b bg-white p-4">
@@ -22,18 +37,21 @@ export default function Navbar() {
 
         {/* Dynamic Buttons (The Bridge) */}
         <div className="flex gap-3">
-          {isLoggedIn ? (
-            // If Logged In: Show Dashboard Button
-            <Link href="/student/dashboard">
-               <Button>Go to Dashboard</Button>
-            </Link>
+          {user ? (
+            // If Logged In: Show Dashboard Button and Logout
+            <div className="flex gap-2">
+              <Link href="/student/dashboard">
+                <Button>Go to Dashboard</Button>
+              </Link>
+              <Button variant="outline" onClick={handleLogout}>Logout</Button>
+            </div>
           ) : (
             // If Visitor: Show Login/Signup
             <>
               <Link href="/login">
                 <Button variant="outline">Login</Button>
               </Link>
-              <Link href="/pricing">
+              <Link href="/signup">
                 <Button>Get Started</Button>
               </Link>
             </>
