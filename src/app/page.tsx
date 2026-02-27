@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import {
   Carousel,
   CarouselContent,
@@ -17,25 +17,25 @@ import { Counter } from "@/components/ui/counter";
 // --- Sub-Component: Auto-Rotating Success Card ---
 const successStories = [
   {
-    rank: "AIR 45",
-    exam: "NEET 2025",
-    quote: "The test series was a game changer. I identified my weak areas in Physics and scored 680.",
-    name: "Rahul Sharma",
-    role: "Student"
+    rank: "Full Marks",
+    exam: "School Math Exam",
+    quote: "Before, I used to get bad grades. I almost got full marks in my math exam and my concepts became strong. Very reliable and worth my money.",
+    name: "Antonio",
+    role: "10th Grade Student"
   },
   {
-    rank: "AIR 12",
-    exam: "JEE Adv 2025",
-    quote: "Conceptual clarity is everything here. The faculty helped me crack the toughest problems.",
-    name: "Priya Patel",
-    role: "Student"
+    rank: "Confidence Up",
+    exam: "Algebra & Word Problems",
+    quote: "Math used to stress me out. After starting online classes, everything made sense. My test scores went up, and I stopped being scared of math.",
+    name: "Katherine",
+    role: "10th Grade Student"
   },
   {
-    rank: "98%",
-    exam: "CBSE Boards",
-    quote: "I balanced my boards and entrance prep perfectly thanks to their hybrid schedule.",
-    name: "Amit Kumar",
-    role: "Student"
+    rank: "Grade Boost",
+    exam: "School Assessments",
+    quote: "I was struggling to keep up. The online sessions helped me understand the basics properly. My grades improved and now I actually enjoy math.",
+    name: "Jaime",
+    role: "10th Grade Student"
   }
 ];
 
@@ -84,11 +84,13 @@ function AutoRotatingSuccessCard() {
             </div>
          </div>
          <h3 className="text-2xl font-bold mb-4 text-slate-800">"Game Changer"</h3>
-         <p className="text-slate-600 mb-8 leading-relaxed min-h-[80px]">
+         <p className="text-slate-600 mb-8 leading-relaxed min-h-[100px]">
            "{story.quote}"
          </p>
          <div className="flex items-center gap-3">
-            <div className="h-10 w-10 bg-slate-300 rounded-full"></div>
+            <div className="h-10 w-10 bg-slate-300 rounded-full flex items-center justify-center text-slate-500 font-bold">
+               {story.name.charAt(0)}
+            </div>
             <div>
                 <p className="font-bold text-slate-900">{story.name}</p>
                 <p className="text-sm text-slate-500">{story.role}</p>
@@ -100,8 +102,6 @@ function AutoRotatingSuccessCard() {
            <div 
               className="h-full bg-blue-600"
               style={{
-                // Key logic: Animation runs 0% -> 100% over 4s. 
-                // Pauses or jumps to full if hovered (controlled by isPaused)
                 width: isPaused ? '100%' : '100%',
                 animation: isPaused ? 'none' : 'progress 4000ms linear forwards'
               }}
@@ -114,48 +114,31 @@ function AutoRotatingSuccessCard() {
 
 // --- MAIN PAGE COMPONENT ---
 export default function Home() {
-  // --- New Logic for Hero Background Carousel ---
-  const heroImages = ["/1.png", "/2.png", "/3.png"];
-  const [heroIndex, setHeroIndex] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setHeroIndex((prev) => (prev + 1) % heroImages.length);
-    }, 5000); // Change image every 5 seconds
-    return () => clearInterval(interval);
-  }, []);
-  // ----------------------------------------------
 
   return (
     <div className="flex flex-col min-h-screen">
       
-      {/* 1. HERO SECTION (Updated BG Image Logic Only) */}
-      <section className="relative h-screen flex items-center justify-center text-center px-4 overflow-hidden">
+      {/* 1. HERO SECTION (Clean background as requested - No Hero Image) */}
+      <section className="relative flex items-center justify-center text-center px-4 py-32 md:py-48 overflow-hidden bg-slate-50">
         
-        {/* BACKGROUND IMAGE with White Overlay */}
-        {/* <div  */}
-          {/* className="absolute inset-0 z-0 bg-cover bg-center transition-all duration-1000 ease-in-out" // Added transition for smooth effect */}
-          {/* style={{  */}
-            {/* backgroundImage: `url('${heroImages[heroIndex]}')`, */}
-          {/* }} */}
-        {/* > */}
-          {/* 90% White Overlay to keep text dark and readable */}
-          {/* <div className="absolute inset-0 bg-white/90"></div> */}
-        {/* </div> */}
+        {/* Subtle Gradient Background */}
+        <div className="absolute inset-0 bg-gradient-to-b from-blue-50/50 to-slate-50 z-0"></div>
 
-        {/* Content (Relative z-10 puts it above the image) */}
+        {/* Content */}
         <div className="relative z-10 container mx-auto max-w-4xl">
-          <div className="inline-flex items-center rounded-full border border-orange-200 bg-orange-50 px-3 py-1 text-sm text-orange-800 mb-6 shadow-sm">
-            <span className="flex h-2 w-2 rounded-full bg-orange-600 mr-2 animate-pulse"></span>
-            Admissions Open for Batch 2026-27
+          <div className="inline-flex items-center rounded-full border border-blue-200 bg-blue-100 px-4 py-1.5 text-sm text-blue-800 mb-6 shadow-sm font-medium">
+            <span className="flex h-2 w-2 rounded-full bg-blue-600 mr-2 animate-pulse"></span>
+            Online Mathematics Tutoring | Grades 6 to 10
           </div>
+          
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-slate-900 mb-6 drop-shadow-sm">
-            Building Future <span className="text-blue-600">IITians</span> & <span className="text-blue-600">Doctors</span>
+            Your <span className="text-blue-600">Road to Success</span> in Mathematics
           </h1>
+          
           <p className="text-xl text-slate-600 mb-10 leading-relaxed max-w-2xl mx-auto font-medium">
-            India's most trusted coaching institute for JEE (Mains & Adv), NEET, and CBSE Boards. 
-            We turn potential into performance with our AIR-1 methodology.
+            We make math simple, logical, and engaging. Overcome the fear of math with our structured online classes, personal attention, and proven teaching methods.
           </p>
+          
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link href="/pricing">
               <Button size="lg" className="px-8 w-full sm:w-auto text-lg h-12 bg-blue-700 hover:bg-blue-800 shadow-lg shadow-blue-900/10">
@@ -163,40 +146,40 @@ export default function Home() {
               </Button>
             </Link>
             <Link href="/about">
-              <Button variant="outline" size="lg" className="w-full sm:w-auto text-lg h-12 bg-white/80 backdrop-blur-sm">
-                Book Classes Now
+              <Button variant="outline" size="lg" className="w-full sm:w-auto text-lg h-12 bg-white/80 backdrop-blur-sm border-slate-300">
+                Learn More About Us
               </Button>
             </Link>
           </div>
         </div>
       </section>
 
-      {/* 2. STATS SECTION (Reverted to Simple Blue UI + Start on View) */}
+      {/* 2. STATS SECTION */}
       <section className="py-12 bg-white border-b border-slate-100">
         <div className="container mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           <div>
             <h3 className="text-4xl font-bold text-blue-700">
-              <Counter end={5000} />
+              <Counter end={109} />+
             </h3>
-            <p className="text-slate-500 mt-2 font-medium">IIT & NEET Selections</p>
+            <p className="text-slate-500 mt-2 font-medium">Students Taught</p>
           </div>
           <div>
             <h3 className="text-4xl font-bold text-blue-700">
-              <Counter end={15} />
+              <Counter end={7} />+
             </h3>
-            <p className="text-slate-500 mt-2 font-medium">Years of Trust</p>
+            <p className="text-slate-500 mt-2 font-medium">Years of Experience</p>
           </div>
           <div>
             <h3 className="text-4xl font-bold text-blue-700">
-              <Counter end={120} />
+              <Counter end={100} duration={2000} />%
             </h3>
-            <p className="text-slate-500 mt-2 font-medium">Expert Faculty (PhDs)</p>
+            <p className="text-slate-500 mt-2 font-medium">Concept Clarity</p>
           </div>
           <div>
             <h3 className="text-4xl font-bold text-blue-700">
-              <Counter end={100} duration={3000} />%
+              6<span className="text-2xl">th</span>-10<span className="text-2xl">th</span>
             </h3>
-            <p className="text-slate-500 mt-2 font-medium">Board Pass Rate</p>
+            <p className="text-slate-500 mt-2 font-medium">Grades Taught</p>
           </div>
         </div>
       </section>
@@ -205,10 +188,9 @@ export default function Home() {
       <section className="py-20 px-4 bg-slate-50">
         <div className="container mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">The [Institute Name] Edge</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">The Ruhani Edge</h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
-              We don't just teach syllabus; we build concepts. Our hybrid learning model ensures 
-              no student is left behind in the race for excellence.
+              We focus on building strong foundations and eliminating the fear of mathematics through a proven, student-centered approach.
             </p>
           </div>
           
@@ -218,12 +200,12 @@ export default function Home() {
               <div className="absolute top-0 left-0 w-full h-1 bg-orange-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
               <CardHeader className="flex flex-col items-center pt-10">
                 <div className="p-5 bg-orange-50 rounded-full mb-6 group-hover:bg-orange-500 transition-colors duration-300">
-                  <BookOpen className="h-10 w-10 text-orange-600 group-hover:text-white transition-colors" />
+                  <Users className="h-10 w-10 text-orange-600 group-hover:text-white transition-colors" />
                 </div>
-                <CardTitle className="text-2xl font-bold">Integrated Learning</CardTitle>
+                <CardTitle className="text-2xl font-bold">Small Batches</CardTitle>
               </CardHeader>
               <CardContent className="text-center text-slate-600 pb-10 px-8 leading-relaxed">
-                Seamlessly covering NCERT school syllabus and competitive exam requirements simultaneously.
+                Personalized attention for every student. We keep our groups small so no one gets left behind and every doubt is cleared.
               </CardContent>
             </Card>
 
@@ -232,12 +214,12 @@ export default function Home() {
               <div className="absolute top-0 left-0 w-full h-1 bg-blue-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
               <CardHeader className="flex flex-col items-center pt-10">
                 <div className="p-5 bg-blue-50 rounded-full mb-6 group-hover:bg-blue-600 transition-colors duration-300">
-                  <Users className="h-10 w-10 text-blue-600 group-hover:text-white transition-colors" />
+                  <BookOpen className="h-10 w-10 text-blue-600 group-hover:text-white transition-colors" />
                 </div>
-                <CardTitle className="text-2xl font-bold">Kota-Level Faculty</CardTitle>
+                <CardTitle className="text-2xl font-bold">Affordable Classes</CardTitle>
               </CardHeader>
               <CardContent className="text-center text-slate-600 pb-10 px-8 leading-relaxed">
-                Learn directly from ex-IITians and top medical professionals who have mentored AIR Top 100 rankers.
+                High-quality education should be accessible. We provide premium online mathematics tutoring at rates that respect your budget.
               </CardContent>
             </Card>
 
@@ -248,29 +230,28 @@ export default function Home() {
                 <div className="p-5 bg-green-50 rounded-full mb-6 group-hover:bg-green-600 transition-colors duration-300">
                   <Trophy className="h-10 w-10 text-green-600 group-hover:text-white transition-colors" />
                 </div>
-                <CardTitle className="text-2xl font-bold">Personal Mentorship</CardTitle>
+                <CardTitle className="text-2xl font-bold">Regular Assessments</CardTitle>
               </CardHeader>
               <CardContent className="text-center text-slate-600 pb-10 px-8 leading-relaxed">
-                Small batch sizes ensure 1-on-1 attention, dedicated doubt solving, and personalized feedback.
+                Bi-weekly and monthly minor tests ensure students stay on track, allowing us to monitor progress and strengthen weak areas.
               </CardContent>
             </Card>
           </div>
         </div>
       </section>
 
-      {/* 4. ACADEMIC PROGRAMS (Constrained Width + Auto Rotate Card) */}
+      {/* 4. ACADEMIC PROGRAMS */}
       <section className="py-24 px-4 bg-white">
-        <div className="container mx-auto max-w-6xl"> {/* Width fixed here */}
+        <div className="container mx-auto max-w-6xl"> 
           <div className="grid md:grid-cols-2 gap-16 items-center">
             
             {/* Left Side: Clean Content */}
             <div className="space-y-8">
               <h2 className="text-4xl font-bold text-slate-900 leading-tight">
-                Designed for Every Stage of Your Journey
+                Designed for Mathematics Success
               </h2>
               <p className="text-lg text-slate-600">
-                Whether you are building a foundation or aiming for the final sprint, 
-                we have a structured path for you.
+                We specialize strictly in Mathematics for Grades 6 through 10, ensuring absolute mastery of the subject before high school graduation.
               </p>
 
               <div className="space-y-6">
@@ -279,8 +260,8 @@ export default function Home() {
                     <div className="flex items-center justify-center w-12 h-12 rounded-full bg-blue-100 text-blue-600 font-bold text-lg group-hover:bg-blue-600 group-hover:text-white transition-all">01</div>
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-slate-900 mb-2">Foundation (Class 8-10)</h3>
-                    <p className="text-slate-600 leading-relaxed">Build strong logic for NTSE & Olympiads while acing Boards.</p>
+                    <h3 className="text-xl font-bold text-slate-900 mb-2">Middle School (Grades 6 & 7)</h3>
+                    <p className="text-slate-600 leading-relaxed">Building fundamental logic, mastering fractions, decimals, and getting comfortable with numbers.</p>
                   </div>
                 </div>
 
@@ -289,8 +270,8 @@ export default function Home() {
                     <div className="flex items-center justify-center w-12 h-12 rounded-full bg-orange-100 text-orange-600 font-bold text-lg group-hover:bg-orange-600 group-hover:text-white transition-all">02</div>
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-slate-900 mb-2">JEE (Mains + Adv)</h3>
-                    <p className="text-slate-600 leading-relaxed">Rigorous Math & Physics training with 50+ Mock Tests.</p>
+                    <h3 className="text-xl font-bold text-slate-900 mb-2">Pre-Algebra (Grade 8)</h3>
+                    <p className="text-slate-600 leading-relaxed">Stepping up the challenge. Step-by-step guidance through equations to remove the fear of advanced math.</p>
                   </div>
                 </div>
 
@@ -299,16 +280,16 @@ export default function Home() {
                     <div className="flex items-center justify-center w-12 h-12 rounded-full bg-green-100 text-green-600 font-bold text-lg group-hover:bg-green-600 group-hover:text-white transition-all">03</div>
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-slate-900 mb-2">NEET (Medical)</h3>
-                    <p className="text-slate-600 leading-relaxed">Specialized Botany/Zoology focus for government seat security.</p>
+                    <h3 className="text-xl font-bold text-slate-900 mb-2">High School Prep (Grades 9 & 10)</h3>
+                    <p className="text-slate-600 leading-relaxed">Focusing on concept clarity over rote learning for algebra, geometry, and strong school test performance.</p>
                   </div>
                 </div>
               </div>
 
               <div className="pt-4">
-                 <Link href="/about">
+                 <Link href="/pricing">
                     <Button size="lg" className="bg-slate-900 hover:bg-slate-800 text-white px-8 h-12">
-                       Explore All Programs <ArrowRight className="ml-2 h-4 w-4" />
+                       Explore Our Plans <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
                  </Link>
               </div>
@@ -325,11 +306,11 @@ export default function Home() {
       <section className="py-24 px-4 bg-slate-50 border-t border-slate-200">
         <div className="container mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-6">Student Voices</h2>
-            <p className="text-lg text-slate-600">Hear from those who walked the path before you.</p>
+            <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-6">Student & Parent Voices</h2>
+            <p className="text-lg text-slate-600">Hear how we've helped students conquer their math anxiety.</p>
           </div>
 
-          <div className="max-w-5xl mx-auto px-12">
+          <div className="max-w-6xl mx-auto px-12">
             <Carousel
               opts={{
                 align: "start",
@@ -354,7 +335,7 @@ export default function Home() {
                           </p>
                           <div className="mt-auto pt-4 border-t border-slate-100">
                             <p className="font-bold text-slate-900">{item.name}</p>
-                            <p className="text-xs text-blue-600 font-semibold">{item.role}</p>
+                            <p className="text-xs text-blue-600 font-semibold mt-1">{item.role}</p>
                           </div>
                         </CardContent>
                       </Card>
@@ -369,20 +350,104 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 6. FINAL CTA */}
-      <section className="py-24 px-4 bg-blue-900 text-white text-center">
+      {/* 6. PRICING PREVIEW SECTION */}
+      <section className="py-24 px-4 bg-white">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-6">Choose Your Learning Path</h2>
+            <p className="text-lg text-slate-600">Flexible plans tailored to every student's needs. Choose what works best for you.</p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Plan 1 Preview */}
+            <Card className="flex flex-col border-2 border-slate-200 hover:border-blue-600 shadow-sm hover:shadow-xl transition-all duration-300 bg-slate-50">
+              <CardHeader>
+                <CardTitle className="text-xl font-bold text-slate-900">Standard Group</CardTitle>
+                <p className="text-sm text-slate-500 font-medium mt-1">Max 10 Students per group</p>
+              </CardHeader>
+              <CardContent className="flex-1">
+                <div className="mb-6">
+                  <span className="text-4xl font-bold text-slate-900">$80</span>
+                  <span className="text-slate-500 font-medium"> / mo</span>
+                </div>
+                <ul className="space-y-3 text-sm text-slate-600 mb-6">
+                  <li className="flex items-start"><CheckCircle2 className="w-5 h-5 mr-3 text-blue-600 shrink-0"/> Starting at 8 classes/month</li>
+                  <li className="flex items-start"><CheckCircle2 className="w-5 h-5 mr-3 text-blue-600 shrink-0"/> Interactive Group Sessions</li>
+                  <li className="flex items-start"><CheckCircle2 className="w-5 h-5 mr-3 text-blue-600 shrink-0"/> Regular Minor & Major Tests</li>
+                </ul>
+              </CardContent>
+              <CardFooter>
+                <Link href="/pricing" className="w-full">
+                  <Button variant="outline" className="w-full h-12">View Full Details</Button>
+                </Link>
+              </CardFooter>
+            </Card>
+
+            {/* Plan 2 Preview (Elevated with Blue Button) */}
+            <Card className="flex flex-col border-2 border-slate-200 hover:border-blue-600 shadow-lg hover:shadow-xl transition-all duration-300 bg-white transform md:-translate-y-4">
+              <CardHeader>
+                <CardTitle className="text-xl font-bold text-slate-900">Premium Small Group</CardTitle>
+                <p className="text-sm text-slate-500 font-medium mt-1">Max 5 Students per group</p>
+              </CardHeader>
+              <CardContent className="flex-1">
+                <div className="mb-6">
+                  <span className="text-4xl font-bold text-slate-900">$110</span>
+                  <span className="text-slate-500 font-medium"> / mo</span>
+                </div>
+                <ul className="space-y-3 text-sm text-slate-600 mb-6">
+                  <li className="flex items-start"><CheckCircle2 className="w-5 h-5 mr-3 text-blue-600 shrink-0"/> Starting at 8 classes/month</li>
+                  <li className="flex items-start"><CheckCircle2 className="w-5 h-5 mr-3 text-blue-600 shrink-0"/> Highly Personalized Attention</li>
+                  <li className="flex items-start"><CheckCircle2 className="w-5 h-5 mr-3 text-blue-600 shrink-0"/> Advanced Peer Interaction</li>
+                </ul>
+              </CardContent>
+              <CardFooter>
+                <Link href="/pricing" className="w-full">
+                  <Button className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-white">View Full Details</Button>
+                </Link>
+              </CardFooter>
+            </Card>
+
+            {/* Plan 3 Preview */}
+            <Card className="flex flex-col border-2 border-slate-200 hover:border-blue-600 shadow-sm hover:shadow-xl transition-all duration-300 bg-slate-50">
+              <CardHeader>
+                <CardTitle className="text-xl font-bold text-slate-900">1-on-1 Private</CardTitle>
+                <p className="text-sm text-slate-500 font-medium mt-1">Individual dedicated tutor</p>
+              </CardHeader>
+              <CardContent className="flex-1">
+                <div className="mb-6">
+                  <span className="text-4xl font-bold text-slate-900">$220</span>
+                  <span className="text-slate-500 font-medium"> / mo</span>
+                </div>
+                <ul className="space-y-3 text-sm text-slate-600 mb-6">
+                  <li className="flex items-start"><CheckCircle2 className="w-5 h-5 mr-3 text-blue-600 shrink-0"/> Starting at 8 classes/month</li>
+                  <li className="flex items-start"><CheckCircle2 className="w-5 h-5 mr-3 text-blue-600 shrink-0"/> 100% Customized Learning Pace</li>
+                  <li className="flex items-start"><CheckCircle2 className="w-5 h-5 mr-3 text-blue-600 shrink-0"/> Direct Parent-Tutor Feedback</li>
+                </ul>
+              </CardContent>
+              <CardFooter>
+                <Link href="/pricing" className="w-full">
+                  <Button variant="outline" className="w-full h-12">View Full Details</Button>
+                </Link>
+              </CardFooter>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* 7. FINAL CTA */}
+      {/* <section className="py-24 px-4 bg-blue-900 text-white text-center">
         <div className="container mx-auto">
-          <h2 className="text-3xl md:text-5xl font-bold mb-6">Start Your Journey to Success</h2>
+          <h2 className="text-3xl md:text-5xl font-bold mb-6">Ready to overcome the fear of Math?</h2>
           <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">
-            Limited seats available for the upcoming session. Don't miss your chance to learn from the best.
+            Join our online classes and build a strong mathematical foundation for the future.
           </p>
           <Link href="/pricing">
              <Button size="lg" variant="secondary" className="px-10 py-6 text-lg font-semibold text-blue-900">
-                Enroll Now <ArrowRight className="ml-2 h-5 w-5" />
+                View Pricing Plans <ArrowRight className="ml-2 h-5 w-5" />
              </Button>
           </Link>
         </div>
-      </section>
+      </section> */}
 
     </div>
   );
@@ -391,28 +456,28 @@ export default function Home() {
 // Data for Testimonials
 const testimonials = [
   {
-    text: "The Physics faculty here is the best. Concepts that seemed impossible in school became easy. I scored 99.8 percentile in JEE Mains!",
-    name: "Aryan Gupta",
-    role: "IIT Delhi (CSE)"
+    text: "Math used to stress me out so much, especially algebra and word problems. After starting online classes, everything finally started making sense. The concepts were explained in a way that felt simple and logical. My test scores went up, but more importantly, I stopped being scared of math.",
+    name: "Katherine",
+    role: "10th Grade Student"
   },
   {
-    text: "Balancing CBSE Boards and NEET was hard, but the weekly test series kept me on track. Secured a seat in my dream medical college.",
-    name: "Neha Verma",
-    role: "AIIMS Delhi"
+    text: "Before these classes, I was struggling to keep up in math and often felt lost in class. The online sessions helped me understand the basics properly and clear all my doubts. The teaching style is patient and easy to follow. My grades improved and now I actually enjoy solving math problems.",
+    name: "Jaime",
+    role: "10th Grade Student"
   },
   {
-    text: "The doubt clearing sessions were a lifesaver. Being able to ask questions freely helped me build confidence.",
-    name: "Rohan Das",
-    role: "NIT Trichy"
+    text: "I used to find math confusing, especially fractions and equations. The online classes helped me understand step by step instead of just memorizing formulas. Now I feel more confident answering questions in school and my performance in tests has improved. Math doesn’t feel scary anymore.",
+    name: "Harelle",
+    role: "8th Grade Student"
   },
   {
-    text: "Environment plays a huge role. Being surrounded by serious aspirants pushed me to work harder every day.",
-    name: "Sanya Mir",
-    role: "NEET Rank 120"
+    text: "We noticed a huge change in our child’s approach towards mathematics. Earlier, homework used to be a daily struggle, but now concepts are much clearer and there is more confidence while solving problems. The improvement in school results has been consistent, and most importantly, the fear of math is gone.",
+    name: "Faiza",
+    role: "Parent of 10th Grader"
   },
   {
-    text: "The study material is precise and to the point. You don't need 10 books, just their modules are enough.",
-    name: "Vikram Singh",
-    role: "JEE Adv Rank 450"
+    text: "The online math tutoring has made a real difference in my child’s learning. The focus on concept clarity rather than rote learning helped build a strong foundation. We saw a clear improvement in grades and also in the way our child approaches problem-solving. The teaching is structured, patient, and very effective.",
+    name: "Vineetha",
+    role: "Parent of 9th Grader"
   }
 ];
