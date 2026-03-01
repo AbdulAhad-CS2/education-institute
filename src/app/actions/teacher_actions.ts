@@ -39,7 +39,8 @@ export async function uploadTest(prevState: any, formData: FormData) {
             teacher_id: teacher.id,
             title,
             description,
-            file_url
+            file_url,
+            is_approved: false
         });
 
     if (error) {
@@ -48,6 +49,50 @@ export async function uploadTest(prevState: any, formData: FormData) {
     }
 
     revalidatePath(`/teacher/batches/${batch_id}/tests`);
+    revalidatePath(`/admin/tests`); // New path
+    return { success: true };
+}
+
+export async function approveTest(testId: number) {
+    const user = await getSession();
+    if (!user || user.role !== 'admin') {
+        return { error: "Unauthorized" };
+    }
+
+    const supabase = await createClient();
+
+    const { error } = await supabase
+        .from("tests")
+        .update({ is_approved: true })
+        .eq("id", testId);
+
+    if (error) {
+        return { error: error.message };
+    }
+
+    revalidatePath(`/admin/tests`);
+    revalidatePath(`/student/dashboard`);
+    return { success: true };
+}
+
+export async function rejectTest(testId: number) {
+    const user = await getSession();
+    if (!user || user.role !== 'admin') {
+        return { error: "Unauthorized" };
+    }
+
+    const supabase = await createClient();
+
+    const { error } = await supabase
+        .from("tests")
+        .delete()
+        .eq("id", testId);
+
+    if (error) {
+        return { error: error.message };
+    }
+
+    revalidatePath(`/admin/tests`);
     return { success: true };
 }
 

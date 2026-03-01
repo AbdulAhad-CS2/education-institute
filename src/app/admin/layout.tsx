@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { LayoutDashboard, BookOpen, Users, Calendar, DollarSign } from "lucide-react";
+import { LayoutDashboard, BookOpen, Users, Calendar, DollarSign, FileCheck } from "lucide-react";
 import { redirect } from "next/navigation";
 import { getSession, logout } from "@/app/actions/auth";
 
@@ -45,6 +45,12 @@ export default async function AdminLayout({
                         <Button variant="ghost" className="w-full justify-start">
                             <Calendar className="mr-2 h-4 w-4" />
                             Batches
+                        </Button>
+                    </Link>
+                    <Link href="/admin/tests">
+                        <Button variant="ghost" className="w-full justify-start">
+                            <FileCheck className="mr-2 h-4 w-4" />
+                            Test Approvals
                         </Button>
                     </Link>
                     <Link href="/admin/plans">

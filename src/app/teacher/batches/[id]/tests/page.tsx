@@ -29,6 +29,7 @@ export default async function ManageTestsPage({ params }: { params: Promise<{ id
                 title,
                 description,
                 file_url,
+                is_approved,
                 created_at,
                 test_submissions (count)
             )
@@ -85,6 +86,15 @@ export default async function ManageTestsPage({ params }: { params: Promise<{ id
                                                         <Users className="h-3 w-3" />
                                                         {test.test_submissions?.[0]?.count || 0} Submissions
                                                     </Badge>
+                                                    {test.is_approved ? (
+                                                        <Badge className="bg-green-100 text-green-700 hover:bg-green-100 border-green-200 shadow-none">
+                                                            Approved
+                                                        </Badge>
+                                                    ) : (
+                                                        <Badge className="bg-yellow-100 text-yellow-700 hover:bg-yellow-100 border-yellow-200 shadow-none">
+                                                            Pending Approval
+                                                        </Badge>
+                                                    )}
                                                     <span className="text-xs text-zinc-400">
                                                         Added: {new Date(test.created_at).toLocaleDateString()}
                                                     </span>

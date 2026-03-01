@@ -35,6 +35,7 @@ export default async function CourseDetailsPage({ params }: { params: Promise<{ 
                 title,
                 description,
                 file_url,
+                is_approved,
                 created_at,
                 test_submissions (id, submitted_at, student_id)
             )
@@ -116,47 +117,56 @@ export default async function CourseDetailsPage({ params }: { params: Promise<{ 
                             </div>
                         ) : (
                             <div className="space-y-4">
-                                {batch.tests.map((test: any) => {
-                                    const studentSubmission = test.test_submissions?.find((s: any) => s.student_id === user.id) || null;
+                                {batch.tests
+                                    .filter((test: any) => user.role !== 'student' || test.is_approved)
+                                    .map((test: any) => {
+                                        const studentSubmission = test.test_submissions?.find((s: any) => s.student_id === user.id) || null;
 
-                                    return (
-                                        <Card key={test.id} className="overflow-hidden border-zinc-200">
-                                            <CardHeader className="bg-zinc-50/50 pb-4">
-                                                <div className="flex justify-between items-start">
-                                                    <div>
-                                                        <CardTitle className="text-lg">{test.title}</CardTitle>
-                                                        <CardDescription className="mt-1">
-                                                            Posted on {new Date(test.created_at).toLocaleDateString()}
-                                                        </CardDescription>
+                                        return (
+                                            <Card key={test.id} className="overflow-hidden border-zinc-200">
+                                                <CardHeader className="bg-zinc-50/50 pb-4">
+                                                    <div className="flex justify-between items-start">
+                                                        <div>
+                                                            <CardTitle className="text-lg">{test.title}</CardTitle>
+                                                            <CardDescription className="mt-1">
+                                                                Posted on {new Date(test.created_at).toLocaleDateString()}
+                                                            </CardDescription>
+                                                        </div>
+                                                        <a href={test.file_url} target="_blank" rel="noopener noreferrer">
+                                                            <Button variant="outline" size="sm" className="gap-2 bg-white">
+                                                                <Download className="h-4 w-4" /> Download
+                                                            </Button>
+                                                        </a>
                                                     </div>
-                                                    <a href={test.file_url} target="_blank" rel="noopener noreferrer">
-                                                        <Button variant="outline" size="sm" className="gap-2 bg-white">
-                                                            <Download className="h-4 w-4" /> Download
-                                                        </Button>
-                                                    </a>
-                                                </div>
-                                            </CardHeader>
-                                            <CardContent className="pt-4 space-y-4">
-                                                {test.description && (
-                                                    <p className="text-sm text-zinc-600 mb-4">{test.description}</p>
-                                                )}
+                                                </CardHeader>
+                                                <CardContent className="pt-4 space-y-4">
+                                                    {test.description && (
+                                                        <p className="text-sm text-zinc-600 mb-4">{test.description}</p>
+                                                    )}
 
-                                                {/* Submission Logic */}
-                                                {user.role === 'student' && (
-                                                    <div className="pt-4 border-t">
-                                                        <SubmitAnswerForm testId={test.id} testTitle={test.title} />
-                                                    </div>
-                                                )}
+                                                    {/* Submission Logic */}
+                                                    {user.role === 'student' && (
+                                                        <div className="pt-4 border-t">
+                                                            {studentSubmission ? (
+                                                                <div className="bg-green-50 border border-green-100 p-4 rounded-lg flex items-center gap-3 text-green-700">
+                                                                    <CheckCircle className="h-5 w-5" />
+                                                                    <div className="text-sm font-medium">Answer successfully submitted!</div>
+                                                                </div>
+                                                            ) : (
+                                                                <SubmitAnswerForm testId={test.id} testTitle={test.title} />
+                                                            )}
+                                                        </div>
+                                                    )}
 
-                                                {user.role === 'teacher' && (
-                                                    <div className="pt-2 text-sm text-blue-600 font-medium">
-                                                        {test.test_submissions?.length || 0} student(s) have submitted.
-                                                    </div>
-                                                )}
-                                            </CardContent>
-                                        </Card>
-                                    );
-                                })}
+                                                    {user.role === 'teacher' && (
+                                                        <div className="pt-2 text-sm text-blue-600 font-medium">
+                                                            {test.test_submissions?.length || 0} student(s) have submitted.
+                                                        </div>
+                                                    )}
+                                                </CardContent>
+                                            </Card>
+                                        );
+                                    })}
                             </div>
                         )}
                     </div>
